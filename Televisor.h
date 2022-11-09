@@ -23,11 +23,13 @@ class Televisor {
         void subirVolumen();
         void bajarVolumen();
         void mutear();
-        void getCanalMasAltoEscuchado();
+        Canal* getCanalMasAltoEscuchado();
         Canal* getNumeroCanalActual();
 
     private: 
         void setCanalActual(Canal* canalActual);
+        unsigned int getVolumen();
+        void setVolumen(unsigned int volumen);
 
 };
 
