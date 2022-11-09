@@ -13,6 +13,7 @@ class Canal {
          * pos: crea un canal
          */
         Canal(unsigned int numero);
+        Canal();
 
         /**
          * @brief Destroy the Canal object

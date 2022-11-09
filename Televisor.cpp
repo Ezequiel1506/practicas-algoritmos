@@ -23,6 +23,7 @@ Televisor::Televisor(unsigned int cantidadTotalCanales){
 Televisor::~Televisor(){
     delete this->canales;
 }
+
 void Televisor::pasarSiguienteCanal(){
     unsigned int posCanalActual = this->canalActual->getPosicionCanal();
     if(posCanalActual == cantidadTotalCanales){
@@ -32,6 +33,7 @@ void Televisor::pasarSiguienteCanal(){
         setCanalActual(this->canales->obtener(posCanalActual++));
     }
 }
+
 void Televisor::pasarAnteriorCanal(){
     unsigned int posCanalActual = this->canalActual->getPosicionCanal();
     if(posCanalActual == 1){
@@ -41,6 +43,7 @@ void Televisor::pasarAnteriorCanal(){
         setCanalActual(this->canales->obtener(posCanalActual--));
     }
 }
+
 void Televisor::seleccionarCanal(unsigned int posCanal){
     if(posCanal<=0){
         throw "El canal no puede ser menor a 1";
@@ -53,16 +56,38 @@ void Televisor::seleccionarCanal(unsigned int posCanal){
 }
 
 void Televisor::subirVolumen(){
-    if (volumen<VOLUMEN_MINIMO){
-        
+    unsigned int volumen = this->getVolumen();
+    if (volumen>VOLUMEN_MAXIMO){
+        this->setVolumen(VOLUMEN_MAXIMO);
     }
+    this->setVolumen(volumen++);
+    this->canalActual->setVolumenActual(volumen++);
 }
-void Televisor::bajarVolumen(){}
+
+void Televisor::bajarVolumen(){
+    unsigned int volumen = this->getVolumen();
+    if (volumen<VOLUMEN_MINIMO){
+        this->setVolumen(VOLUMEN_MINIMO);
+    }
+    this->setVolumen(volumen--);
+    this->canalActual->setVolumenActual(volumen--);
+}
 
 void Televisor::mutear(){
     this->estadoVolumen=Muteado;
 }
-void Televisor::getCanalMasAltoEscuchado(){}
+Canal* Televisor::getCanalMasAltoEscuchado(){
+    Canal* canalMasAltoEscuchado = new Canal();
+    unsigned int volumenMasAlto = 0;
+    for (int i = 1; 1<=this->canales->getLongitud(); i++ ){
+        if(volumenMasAlto < this->canales->obtener(i)->getVolumenMaximo()){
+            canalMasAltoEscuchado=this->canales->obtener(i);
+        }
+    }
+    return canalMasAltoEscuchado;
+
+}
+
 Canal* Televisor::getNumeroCanalActual(){
     return this->canalActual;
 }
@@ -73,6 +98,20 @@ void Televisor::setCanalActual(Canal* canal){
     }
     this->canalActual=canal;
 }
+
+unsigned int Televisor::getVolumen(){
+    return this->volumen;
+}
+void Televisor::setVolumen(unsigned int volumen){
+    if (volumen>VOLUMEN_MAXIMO){
+        throw "Error";
+    }
+    if (volumen<VOLUMEN_MINIMO){
+        throw "Error";
+    }
+    this->volumen=volumen;
+}
+
 
     
 

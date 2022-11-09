@@ -6,6 +6,7 @@ Canal::Canal(unsigned int numero){
     }
     this->numero = numero;
 }
+Canal::Canal(){}
 Canal::~Canal(){}
 
 unsigned int Canal::getVolumenUltimaVez(){
